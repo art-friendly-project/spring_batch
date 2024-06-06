@@ -1,0 +1,31 @@
+spring:
+  #@EnableBatchProcessing 사용하면 커스텀 한걸로 판단하고 일부 설정이 초기화된다.
+  batch:
+    jdbc:
+      initialize-schema: always
+  datasource:
+    business:
+      url: jdbc:mysql://localhost:3306/artfriendly?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      #url: jdbc:mysql://database-1.cn0mmqiaop3v.ap-northeast-2.rds.amazonaws.com/artfriendly?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+    second-datasource:
+      url: jdbc:mysql://localhost:3306/batch?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        default_batch_fetch_size: 100
+    open-in-view: false
+
+  application:
+    name: Crawler
