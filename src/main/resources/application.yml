@@ -5,14 +5,15 @@ spring:
       initialize-schema: always
   datasource:
     business:
-      url: jdbc:mysql://localhost:3306/artfriendly?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-      #url: jdbc:mysql://database-1.cn0mmqiaop3v.ap-northeast-2.rds.amazonaws.com/artfriendly?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      #url: jdbc:mysql://localhost:3306/artfriendly?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      url: jdbc:mysql://database-1.cn0mmqiaop3v.ap-northeast-2.rds.amazonaws.com/artfriendly?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
       username: ${DATABASE_USERNAME}
       password: ${DATABASE_PASSWORD}
       driver-class-name: com.mysql.cj.jdbc.Driver
 
     second-datasource:
-      url: jdbc:mysql://localhost:3306/batch?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      #url: jdbc:mysql://localhost:3306/batch?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      url: jdbc:mysql://database-1.cn0mmqiaop3v.ap-northeast-2.rds.amazonaws.com/batch?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
       username: ${DATABASE_USERNAME}
       password: ${DATABASE_PASSWORD}
       driver-class-name: com.mysql.cj.jdbc.Driver
