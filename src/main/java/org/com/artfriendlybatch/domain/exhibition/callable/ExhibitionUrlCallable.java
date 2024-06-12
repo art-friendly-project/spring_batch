@@ -26,6 +26,7 @@ public class ExhibitionUrlCallable implements Callable<ExhibitionUpdateDto> {
         // 검색어 설정
         String searchWord = HtmlEntityRemover.removeHtmlEntities(exhibitionInfo.getTitle());
         String url = "https://www.mcst.go.kr/kor/s_culture/culture/cultureList.jsp?pSeq=&pRo=&pCurrentPage=1&pType=&pPeriod=&fromDt=&toDt=&pArea=&pSearchType=01&pSearchWord=" + searchWord;
+        String exhibitionSite = "https://www.mcst.go.kr/kor/s_culture/culture/";
 
         // Jsoup을 이용해 웹 페이지에서 데이터 추출
         Document doc = Jsoup.connect(url).get();
@@ -35,7 +36,7 @@ public class ExhibitionUrlCallable implements Callable<ExhibitionUpdateDto> {
             String href = link.attr("href");
             return ExhibitionUpdateDto.builder()
                     .exhibitionInfo(exhibitionInfo)
-                    .url(href).build();
+                    .url(exhibitionSite+href).build();
         }
         return null;
     }

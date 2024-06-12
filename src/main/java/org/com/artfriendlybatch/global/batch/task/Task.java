@@ -14,8 +14,8 @@ public class Task {
     private final ExhibitionInfoService exhibitionInfoService;
 
     public RepeatStatus exhibitionInfoCrawling() {
-        List<ExhibitionUpdateDto> urls = exhibitionInfoService.getStringList();
-        exhibitionInfoService.extracted(urls);
+        exhibitionInfoService.getDetailUrl();
+
         return RepeatStatus.FINISHED;
     }
 

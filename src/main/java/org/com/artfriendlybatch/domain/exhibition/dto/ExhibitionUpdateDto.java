@@ -11,5 +11,4 @@ import org.com.artfriendlybatch.domain.exhibition.entity.ExhibitionInfo;
 public class ExhibitionUpdateDto {
     private ExhibitionInfo exhibitionInfo;
     private String url;
-    private String description;
 }
