@@ -1,23 +1,18 @@
 package org.com.artfriendlybatch.global.batch.task;
 
 import lombok.RequiredArgsConstructor;
-import org.com.artfriendlybatch.domain.exhibition.dto.ExhibitionUpdateDto;;
 import org.com.artfriendlybatch.domain.exhibition.service.ExhibitionInfoService;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
-public class Task {
+public class ExhibitionCrawlingTask {
     private final ExhibitionInfoService exhibitionInfoService;
 
     public RepeatStatus exhibitionInfoCrawling() {
-        exhibitionInfoService.getDetailUrl();
+        exhibitionInfoService.setDetailHomePageUrl();
 
         return RepeatStatus.FINISHED;
     }
-
-
 }

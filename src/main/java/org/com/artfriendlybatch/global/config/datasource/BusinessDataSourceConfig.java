@@ -1,4 +1,4 @@
-package org.com.artfriendlybatch.global.config;
+package org.com.artfriendlybatch.global.config.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories(
-    basePackages = "org.com.artfriendlybatch.domain.exhibition",
+    basePackages = "org.com.artfriendlybatch.domain",
     entityManagerFactoryRef = "entityManagerFactory",
     transactionManagerRef = "transactionManager"
 )
@@ -50,7 +50,7 @@ public class BusinessDataSourceConfig {
             EntityManagerFactoryBuilder builder, @Qualifier("businessDataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("org.com.artfriendlybatch.domain.exhibition.entity")
+                .packages("org.com.artfriendlybatch.domain")
                 .persistenceUnit("businessPersistenceUnit")
                 .build();
     }

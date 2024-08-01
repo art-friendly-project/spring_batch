@@ -8,7 +8,7 @@ import org.com.artfriendlybatch.domain.exhibition.entity.ExhibitionInfo;
 @Getter
 @Setter
 @Builder
-public class ExhibitionUpdateDto {
-    private ExhibitionInfo exhibitionInfo;
-    private String url;
+public class ExhibitionInfoIntegrateDto {
+    ExhibitionInfo exhibitionInfo;
+    boolean updateAble;
 }

@@ -1,6 +1,6 @@
 package org.com.artfriendlybatch.domain.exhibition.callable;
 
-import org.com.artfriendlybatch.domain.exhibition.dto.ExhibitionUpdateDto;
+import org.com.artfriendlybatch.domain.exhibition.dto.ExhibitionUrlUpdateDto;
 import org.com.artfriendlybatch.domain.exhibition.entity.ExhibitionInfo;
 import org.com.artfriendlybatch.global.utils.HtmlEntityRemover;
 import org.jsoup.Jsoup;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-public class ExhibitionUrlCallable implements Callable<ExhibitionUpdateDto> {
+public class ExhibitionUrlCallable implements Callable<ExhibitionUrlUpdateDto> {
     private final ExhibitionInfo exhibitionInfo;
 
     public ExhibitionUrlCallable(ExhibitionInfo exhibitionInfo) {
@@ -18,11 +18,11 @@ public class ExhibitionUrlCallable implements Callable<ExhibitionUpdateDto> {
     }
 
     @Override
-    public ExhibitionUpdateDto call() throws Exception {
+    public ExhibitionUrlUpdateDto call() throws Exception {
         return getExhibitionUpdateDto();
     }
 
-    private ExhibitionUpdateDto getExhibitionUpdateDto() throws IOException {
+    private ExhibitionUrlUpdateDto getExhibitionUpdateDto() throws IOException {
         // 검색어 설정
         String searchWord = HtmlEntityRemover.removeHtmlEntities(exhibitionInfo.getTitle());
         String url = "https://www.mcst.go.kr/kor/s_culture/culture/cultureList.jsp?pSeq=&pRo=&pCurrentPage=1&pType=&pPeriod=&fromDt=&toDt=&pArea=&pSearchType=01&pSearchWord=" + searchWord;
@@ -34,7 +34,7 @@ public class ExhibitionUrlCallable implements Callable<ExhibitionUpdateDto> {
 
         if (link != null) {
             String href = link.attr("href");
-            return ExhibitionUpdateDto.builder()
+            return ExhibitionUrlUpdateDto.builder()
                     .exhibitionInfo(exhibitionInfo)
                     .url(exhibitionSite+href).build();
         }

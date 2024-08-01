@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.com.artfriendlybatch.domain.common.BaseTimeEntity;
-import org.com.artfriendlybatch.domain.exhibition.dto.ExhibitionUpdateDto;
+import org.com.artfriendlybatch.domain.exhibition.dto.ExhibitionUrlUpdateDto;
 
 import java.time.LocalDate;
 
@@ -82,6 +82,10 @@ public class ExhibitionInfo extends BaseTimeEntity {
     @NotNull
     private String progressStatus;
 
+    @OneToOne
+    @JoinColumn(name = "exhibition_id")
+    private Exhibition exhibition;
+
     @Builder
     public ExhibitionInfo(Long id, int seq, String title, String detailInfoUrl, LocalDate startDate, LocalDate endDate, String place, String realmName, String area, String imageUrl, double gpsX, double gpsY, String ticketingUrl, String phone, String price, String placeAddr, String progressStatus) {
         this.id = id;
@@ -103,7 +107,49 @@ public class ExhibitionInfo extends BaseTimeEntity {
         this.progressStatus = progressStatus;
     }
 
-    public void updateForm(ExhibitionUpdateDto exhibitionUpdateDto) {
-        this.detailInfoUrl = exhibitionUpdateDto.getUrl();
+    public ExhibitionInfo updateForm(ExhibitionInfo updateExhibitionInfo) {
+        this.title = updateExhibitionInfo.getTitle();
+        this.startDate = updateExhibitionInfo.getStartDate();
+        this.endDate = updateExhibitionInfo.getEndDate();
+        this.place = updateExhibitionInfo.getPlace();
+        this.realmName = updateExhibitionInfo.getRealmName();
+        this.area = updateExhibitionInfo.getArea();
+        this.imageUrl = updateExhibitionInfo.getImageUrl();
+        this.gpsX = updateExhibitionInfo.getGpsX();
+        this.gpsY = updateExhibitionInfo.getGpsY();
+        this.ticketingUrl = updateExhibitionInfo.getTicketingUrl();
+        this.phone = updateExhibitionInfo.getPhone();
+        this.price = updateExhibitionInfo.getPrice();
+        this.placeAddr = updateExhibitionInfo.getPlaceAddr();
+
+        return this;
+    }
+
+    public ExhibitionInfo updateForm(ExhibitionUrlUpdateDto exhibitionUrlUpdateDto) {
+        this.detailInfoUrl = exhibitionUrlUpdateDto.getUrl();
+
+        return this;
+    }
+
+    public ExhibitionInfo updateProgressStatus() {
+        LocalDate now = LocalDate.now();
+        // 종료 날짜가 지난 경우
+        if (now.isAfter(this.getEndDate())) {
+            this.progressStatus = "ended";
+        }
+        // 현재 날짜가 시작 날짜와 같거나 이후이며, 종료 날짜 이전인 경우
+        else if (!now.isBefore(this.getStartDate()) && now.isBefore(this.getEndDate())) {
+            this.progressStatus = "inProgress";
+        }
+        // 시작 날짜가 아직 오지 않은 경우
+        else if (now.isBefore(this.getStartDate())) {
+            this.progressStatus = "scheduled";
+        }
+
+        return this;
+    }
+
+    public void setExhibition(Exhibition exhibition) {
+        this.exhibition = exhibition;
     }
 }

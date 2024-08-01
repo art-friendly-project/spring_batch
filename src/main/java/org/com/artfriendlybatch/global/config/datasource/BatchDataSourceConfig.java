@@ -1,4 +1,4 @@
-package org.com.artfriendlybatch.global.config;
+package org.com.artfriendlybatch.global.config.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
