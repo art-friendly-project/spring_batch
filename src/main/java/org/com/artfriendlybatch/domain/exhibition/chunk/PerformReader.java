@@ -12,16 +12,17 @@ import java.util.List;
 public class PerformReader implements ItemReader<PerformList> {
 
     private final ExhibitionInfoService exhibitionInfoService;
-    private final List<PerformList> details;
+    private List<PerformList> details;
     private int currentIndex = 0;
 
     public PerformReader(ExhibitionInfoService exhibitionInfoService) {
         this.exhibitionInfoService = exhibitionInfoService;
-        this.details = this.fetchDataFromApi();
     }
 
     @Override
     public PerformList read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+        this.details = fetchDataFromApi();
+
         if (currentIndex < details.size()) {
             return details.get(currentIndex++); // 현재 인덱스의 항목 반환 후 인덱스 증가
         }
