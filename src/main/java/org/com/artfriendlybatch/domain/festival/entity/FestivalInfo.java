@@ -7,13 +7,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.com.artfriendlybatch.domain.common.BaseTimeEntity;
 
 import java.time.LocalDate;
 
 @Entity(name = "festival_info")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FestivalInfo {
+public class FestivalInfo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

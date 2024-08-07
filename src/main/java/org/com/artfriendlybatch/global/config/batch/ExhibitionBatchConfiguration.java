@@ -5,10 +5,12 @@ import org.com.artfriendlybatch.domain.exhibition.dto.apiIntegrationDto.callExhi
 import org.com.artfriendlybatch.domain.exhibition.entity.ExhibitionInfo;
 import org.com.artfriendlybatch.domain.exhibition.mapper.ExhibitionInfoMapper;
 import org.com.artfriendlybatch.domain.exhibition.chunk.ExhibitionInfoChunk;
+import org.com.artfriendlybatch.global.batch.policy.CustomSkipPolicy;
 import org.com.artfriendlybatch.global.batch.task.ExhibitionCrawlingTask;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
@@ -60,12 +62,16 @@ public class ExhibitionBatchConfiguration {
     }
 
     @Bean(name = "integrateStep")
+    @JobScope
     Step exhibitionIntegrateStep(JobRepository jobRepository, PlatformTransactionManager tx, ExhibitionInfoMapper exhibitionInfoMapper) {
         return new StepBuilder("exhibitionInfoIntegrateStep", jobRepository)
                 .<PerformList, ExhibitionInfoIntegrateDto>chunk(10, tx)
                 .reader(exhibitionInfoChunk.exhibitionInfoIntegrateReader())
                 .processor(exhibitionInfoChunk.exhibitionInfoIntegrateProcessor(exhibitionInfoMapper))
                 .writer(exhibitionInfoChunk.exhibitionInfoIntegrateWriter())
+                .faultTolerant()
+                .skipLimit(10)
+                .skipPolicy(new CustomSkipPolicy())
                 .build();
     }
 

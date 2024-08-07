@@ -17,12 +17,11 @@ public class PerformReader implements ItemReader<PerformList> {
 
     public PerformReader(ExhibitionInfoService exhibitionInfoService) {
         this.exhibitionInfoService = exhibitionInfoService;
+        this.details = fetchDataFromApi();
     }
 
     @Override
     public PerformList read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        this.details = fetchDataFromApi();
-
         if (currentIndex < details.size()) {
             return details.get(currentIndex++); // 현재 인덱스의 항목 반환 후 인덱스 증가
         }

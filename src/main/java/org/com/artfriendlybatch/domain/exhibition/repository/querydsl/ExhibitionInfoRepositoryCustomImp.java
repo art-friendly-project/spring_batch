@@ -25,7 +25,6 @@ public class ExhibitionInfoRepositoryCustomImp implements ExhibitionInfoReposito
     @Override
     public List<ExhibitionInfo> findExhibitionInfoByProgressStatusIn(List<String> progressStatus) {
         return queryFactory.selectFrom(exhibitionInfo)
-                .from(exhibitionInfo)
                 .where(exhibitionInfo.progressStatus.in(progressStatus))
                 .fetch();
     }
@@ -33,7 +32,6 @@ public class ExhibitionInfoRepositoryCustomImp implements ExhibitionInfoReposito
     @Override
     public List<ExhibitionInfo> findExhibitionInfoByProgressStatus(String progressStatus) {
         return queryFactory.selectFrom(exhibitionInfo)
-                .from(exhibitionInfo)
                 .where(exhibitionInfo.progressStatus.eq(progressStatus))
                 .fetch();
     }

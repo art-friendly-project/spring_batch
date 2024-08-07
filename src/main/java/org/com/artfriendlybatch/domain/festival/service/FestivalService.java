@@ -1,6 +1,5 @@
 package org.com.artfriendlybatch.domain.festival.service;
 
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,7 @@ import org.com.artfriendlybatch.domain.festival.repository.FestivalRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.concurrent.*;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FestivalService {
     private final FestivalApiClient festivalApiClient;
@@ -40,7 +40,7 @@ public class FestivalService {
     private String serviceKey;
     private final String contentTypeId = "15"; // 축제 행사
 
-    public AreaBaseInfoRspDto getAreaBaseList() throws Exception {
+    public AreaBaseInfoRspDto getAreaBaseList() {
         final int numOfRows = 100;
         final int pageNo = 1;
         final String arrange = "R"; // 생성일 순, 이미지 있는 것 부터 정렬
@@ -57,7 +57,7 @@ public class FestivalService {
 
     }
 
-    public CommonInfoRspDto getCommonInfo(String contentId) throws Exception {
+    public CommonInfoRspDto getCommonInfo(String contentId) {
         final String defaultYN = "Y";
         final String firstImageYN = "Y";
         final String addrinfoYN = "Y";
@@ -73,18 +73,18 @@ public class FestivalService {
             throw new RuntimeException("공통 정보 api 호출 오류");
     }
 
-    public DetailInfoRspDto getDetailInfo(String contentId) throws Exception {
+    public DetailInfoRspDto getDetailInfo(String contentId) {
         ResponseEntity<DetailInfoRspDto> detailInfoRspDtoResponseEntity = festivalApiClient.getDetailInfo(mobileOS, mobileApp, serviceKey, type, contentId, contentTypeId);
 
         if(detailInfoRspDtoResponseEntity.getStatusCode().is2xxSuccessful()) {
             return detailInfoRspDtoResponseEntity.getBody();
         }
         else
-            throw new RuntimeException("공통 정보 api 호출 오류");
+            throw new RuntimeException("상세 정보 api 호출 오류");
     }
 
     @Transactional
-    public void integrateFestivalInfo() throws Exception {
+    public void integrateFestivalInfo() {
         List<FestivalInfo> festivalInfoList = new ArrayList<>();
         ExecutorService excutor = Executors.newFixedThreadPool(10);
 

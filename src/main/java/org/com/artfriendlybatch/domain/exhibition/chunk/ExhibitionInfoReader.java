@@ -16,13 +16,12 @@ public class ExhibitionInfoReader implements ItemReader<ExhibitionInfo> {
 
     public ExhibitionInfoReader(ExhibitionInfoService exhibitionInfoService) {
         this.exhibitionInfoService = exhibitionInfoService;
+        this.details = fetchDataFromDb();
     }
 
 
     @Override
     public ExhibitionInfo read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
-        this.details = fetchDataFromDb();
-
         if (currentIndex < details.size()) {
             return details.get(currentIndex++); // 현재 인덱스의 항목 반환 후 인덱스 증가
         }

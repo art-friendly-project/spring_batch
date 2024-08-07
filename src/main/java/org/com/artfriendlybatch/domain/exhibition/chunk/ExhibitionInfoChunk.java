@@ -7,6 +7,7 @@ import org.com.artfriendlybatch.domain.exhibition.entity.ExhibitionInfo;
 import org.com.artfriendlybatch.domain.exhibition.mapper.ExhibitionInfoMapper;
 import org.com.artfriendlybatch.domain.exhibition.repository.ExhibitionInfoRepository;
 import org.com.artfriendlybatch.domain.exhibition.service.ExhibitionInfoService;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -26,11 +27,13 @@ public class ExhibitionInfoChunk {
     }
 
     @Bean
+    @StepScope
     public ItemReader<PerformList> exhibitionInfoIntegrateReader() {
         return new PerformReader(exhibitionInfoService); // API를 호출하여 데이터 읽기
     }
 
     @Bean
+    @StepScope
     public ItemProcessor<PerformList, ExhibitionInfoIntegrateDto> exhibitionInfoIntegrateProcessor(ExhibitionInfoMapper exhibitionInfoMapper) {
         return item -> {
             // API 호출 및 ExhibitionInfo 생성 로직(이미 있는 값이면 업데이트로 수정)
@@ -60,6 +63,7 @@ public class ExhibitionInfoChunk {
     }
 
     @Bean
+    @StepScope
     public ItemWriter<ExhibitionInfoIntegrateDto> exhibitionInfoIntegrateWriter() {
         return items -> {
             for (ExhibitionInfoIntegrateDto dto : items) {
@@ -75,16 +79,19 @@ public class ExhibitionInfoChunk {
     }
 
     @Bean
+    @StepScope
     public ItemReader<ExhibitionInfo> exhibitionInfoReader() {
         return new ExhibitionInfoReader(exhibitionInfoService);
     }
 
     @Bean
+    @StepScope
     public ItemProcessor<ExhibitionInfo, ExhibitionInfo> exhibitionInfoProcessor() {
         return ExhibitionInfo::updateProgressStatus;
     }
 
     @Bean
+    @StepScope
     public ItemWriter<ExhibitionInfo> exhibitionInfoWriter() {
         return exhibitionInfoRepository::saveAll;
     }

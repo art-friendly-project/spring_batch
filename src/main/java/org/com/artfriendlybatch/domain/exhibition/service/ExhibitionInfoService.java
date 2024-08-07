@@ -139,7 +139,7 @@ public class ExhibitionInfoService {
         ExhibitionApiRspDto exhibitionApiRspDto = exhibitionApiClient.getDetail(String.valueOf(seq), serviceKey);
 
         if(exhibitionApiRspDto.getComMsgHeader().getSuccessYN().equals("N"))
-            throw new RuntimeException("api 연동 에러");
+            throw new RuntimeException("전시 정보 api 호출 오류");
 
         return exhibitionApiRspDto;
     }
@@ -163,8 +163,9 @@ public class ExhibitionInfoService {
                 serviceKey
         );
 
-        if(responseData.getComMsgHeader().getSuccessYN().equals("N"))
-            throw new RuntimeException("api 연동 에러");
+        if(responseData.getComMsgHeader().getSuccessYN().equals("N")) {
+            throw new RuntimeException("전시 정보 api 호출 오류");
+        }
 
         return responseData;
     }

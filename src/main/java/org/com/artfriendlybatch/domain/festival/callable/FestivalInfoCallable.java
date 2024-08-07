@@ -5,6 +5,8 @@ import org.com.artfriendlybatch.domain.festival.dto.DetailInfoRspDto;
 import org.com.artfriendlybatch.domain.festival.entity.FestivalInfo;
 import org.com.artfriendlybatch.domain.festival.mapper.FestivalMapper;
 import org.com.artfriendlybatch.domain.festival.service.FestivalService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.Callable;
 
@@ -24,7 +26,8 @@ public class FestivalInfoCallable implements Callable<FestivalInfo> {
         return getFestivalInfo();
     }
 
-    private FestivalInfo getFestivalInfo() throws Exception {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public FestivalInfo getFestivalInfo() {
         CommonInfoRspDto commonInfoRspDto = festivalService.getCommonInfo(contentId);
         DetailInfoRspDto detailInfoRspDto = festivalService.getDetailInfo(contentId);
 
