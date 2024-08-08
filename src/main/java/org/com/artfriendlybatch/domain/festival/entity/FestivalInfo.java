@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Entity(name = "festival_info")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "festival_info")
 public class FestivalInfo extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
