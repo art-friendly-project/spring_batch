@@ -92,7 +92,7 @@ public class ExhibitionInfoService {
         List<PerformList> allPerforLists = new ArrayList<>();
 
         LocalDate now = LocalDate.now();
-        int duration = 6;
+        int duration = 1;
         String realmCode = "D000";
         String startDate = LocalDateFormatter.convertToString(now, "yyyyMMdd");
         String endDate = LocalDateFormatter.convertToString(now.plusMonths(duration), "yyyyMMdd");

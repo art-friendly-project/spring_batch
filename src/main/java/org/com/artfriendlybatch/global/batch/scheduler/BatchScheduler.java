@@ -25,7 +25,7 @@ public class BatchScheduler {
         this.festivalInfoJob = festivalInfoJob;
     }
 
-    @Scheduled(cron = "0 1 0 * * ?")
+    @Scheduled(fixedDelay = 100000000)
     public void runExhibitionBatchJob() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
@@ -38,7 +38,7 @@ public class BatchScheduler {
         }
     }
 
-    @Scheduled(cron = "0 1 0 * * ?")
+    @Scheduled(fixedDelay = 100000000)
     public void runFestivalBatchJob() {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
