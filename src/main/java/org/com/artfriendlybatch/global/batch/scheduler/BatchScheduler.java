@@ -38,16 +38,16 @@ public class BatchScheduler {
         }
     }
 
-    @Scheduled(fixedDelay = 100000000)
-    public void runFestivalBatchJob() {
-        JobParameters jobParameters = new JobParametersBuilder()
-                .addLong("time", System.currentTimeMillis())
-                .toJobParameters();
-        try {
-            jobLauncher.run(festivalInfoJob, jobParameters);
-        } catch (JobExecutionAlreadyRunningException | JobRestartException
-                 | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Scheduled(fixedDelay = 100000000)
+//    public void runFestivalBatchJob() {
+//        JobParameters jobParameters = new JobParametersBuilder()
+//                .addLong("time", System.currentTimeMillis())
+//                .toJobParameters();
+//        try {
+//            jobLauncher.run(festivalInfoJob, jobParameters);
+//        } catch (JobExecutionAlreadyRunningException | JobRestartException
+//                 | JobInstanceAlreadyCompleteException | JobParametersInvalidException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
